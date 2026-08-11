@@ -2,9 +2,9 @@ package com.codecool;
 
 import com.codecool.Model.Booking;
 import com.codecool.Model.Category;
-import com.codecool.Model.Itinerary;
 import com.codecool.Model.Refundable;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,13 +22,12 @@ public class BookingDesk {
             }
         }
             itineraries.add(itinerary);
-
     }
 
-    public double getItinerariesPrice(){
-        double fullItinerariesPrice = 0;
+    public BigDecimal getItinerariesPrice(){
+        BigDecimal fullItinerariesPrice = BigDecimal.ZERO;
         for(Itinerary itinerary : itineraries){
-            fullItinerariesPrice += itinerary.getFullPrice();
+            fullItinerariesPrice.add(itinerary.getFullPrice());
         }
         return fullItinerariesPrice;
     }
@@ -49,14 +48,14 @@ public class BookingDesk {
         }
         Itinerary mostExpensiveItinerary = itineraries.getFirst();
         for(Itinerary itinerary : itineraries){
-            if(mostExpensiveItinerary.getFullPrice()<itinerary.getFullPrice()){
-                    mostExpensiveItinerary=itinerary;
+            if(mostExpensiveItinerary.getFullPrice().compareTo(itinerary.getFullPrice()) < 0){
+                mostExpensiveItinerary = itinerary;
             }
         }
             return mostExpensiveItinerary;
     }
 
-    public double deleteItinerary(String destination, int ID, int daysRemaining){
+    public BigDecimal deleteItinerary(String destination, int ID, int daysRemaining){
         for(Itinerary itinerary : itineraries){
             if(itinerary.getDestination().equals(destination)){
                 Booking booking = itinerary.getBookingByID(ID);

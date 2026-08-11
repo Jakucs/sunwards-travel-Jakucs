@@ -1,5 +1,7 @@
 package com.codecool.Model;
 
+import java.math.BigDecimal;
+
 public class FlightBooking  extends Booking{
 
     private double BASE_FEE;
@@ -18,8 +20,8 @@ public class FlightBooking  extends Booking{
     }
 
     @Override
-    public double getPrice() {
+    public BigDecimal getPrice() {
         double total = BASE_FEE  * seats + (BAG_FEE * bags);
-        return Math.round(total * 100) / 100.0;
+        return BigDecimal.valueOf(total);
     }
 }

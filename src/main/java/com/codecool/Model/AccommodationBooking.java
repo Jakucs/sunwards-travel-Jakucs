@@ -1,8 +1,10 @@
 package com.codecool.Model;
 
+import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.math.BigDecimal;
 
-public class AccommodationBooking  extends Booking implements Refundable{
+public class AccommodationBooking  extends CancellableBooking{
 
     private double BASE_FEE;
     private static double PRICE_PERCENTAGE_FOR_LONG_STAY = 0.90;
@@ -22,33 +24,13 @@ public class AccommodationBooking  extends Booking implements Refundable{
     }
 
     @Override
-    public double getPrice() {
+    public BigDecimal getPrice() {
         if(nights<7){
-            return (double) Math.round(BASE_FEE * nights * rooms * 100) / 100;
+            return UtilityMoney.makeDecimal(BASE_FEE*nights*rooms);
+            //<---ezt kiszerrvezni külön osztályba, utility money osztályba pl. és ezt felhasználni. ez egy külön osztály felelőssége legyen.
+            //mock+stream()
         } else {
-            return (double) Math.round((BASE_FEE * nights * rooms) * PRICE_PERCENTAGE_FOR_LONG_STAY * 100) / 100;
+            return UtilityMoney.makeDecimal(BASE_FEE*nights*rooms*PRICE_PERCENTAGE_FOR_LONG_STAY);
         }
-    }
-
-
-    @Override
-    public double cancel(int daysRemaining) {
-        if(daysRemaining<0){
-            throw new IllegalArgumentException("Days remaining can't be negative");
-        } else if (isCancelled){
-            throw new IllegalArgumentException("A reservation can't be canceled twice.");
-        }
-        if(daysRemaining>14){
-            this.isCancelled=true;
-            return (double) Math.round(getPrice() * 0.80 * 100) / 100;
-        } else {
-            this.isCancelled=true;
-            return (double) Math.round(getPrice() * 0.25 * 100) / 100;
-        }
-    }
-
-    @Override
-    public boolean getIsCancelled() {
-        return isCancelled;
     }
 }

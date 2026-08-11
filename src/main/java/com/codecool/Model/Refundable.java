@@ -1,8 +1,10 @@
 package com.codecool.Model;
 
+import java.math.BigDecimal;
+
 public interface Refundable {
 
-    public double cancel(int daysRemaining);
+    public BigDecimal cancel(int daysRemaining);
 
     public boolean getIsCancelled();
 }

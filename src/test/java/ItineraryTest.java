@@ -1,7 +1,6 @@
-import com.codecool.BookingDesk;
 import com.codecool.Model.AccommodationBooking;
 import com.codecool.Model.Category;
-import com.codecool.Model.Itinerary;
+import com.codecool.Itinerary;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

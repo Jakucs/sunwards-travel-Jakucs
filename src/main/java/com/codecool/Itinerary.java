@@ -1,7 +1,11 @@
-package com.codecool.Model;
+package com.codecool;
 
+import com.codecool.Model.Booking;
+import com.codecool.Model.Category;
+import com.codecool.Model.Refundable;
+
+import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Itinerary {
@@ -32,9 +36,9 @@ public class Itinerary {
     }
 
     public void allValidBooking(){
-        double allBookingPrice = 0;
+        BigDecimal allBookingPrice = BigDecimal.ZERO;
         for(Booking booking : bookings){
-            allBookingPrice += booking.getPrice();
+            allBookingPrice.add( booking.getPrice());
         }
     }
 
@@ -42,20 +46,20 @@ public class Itinerary {
         return bookings.size();
     }
 
-    public double getFullPrice(){
-        double fullPrice = 0;
+    public BigDecimal getFullPrice(){
+        BigDecimal fullPrice = BigDecimal.ZERO;
         for(Booking booking : bookings){
             if(booking instanceof Refundable refundable){
                 if(!refundable.getIsCancelled()){
-                    fullPrice += booking.getPrice();
+                    fullPrice = fullPrice.add(booking.getPrice());
                 }
             }
         }
         if(bookings.isEmpty()){
-            return 0;
+            return BigDecimal.ZERO;
         }
         if((adults+children) >= 8){
-            return fullPrice*0.95;
+            return fullPrice.multiply(BigDecimal.valueOf(0.95));
         }else{
             return fullPrice;
         }
@@ -74,7 +78,7 @@ public class Itinerary {
 
     public Booking getBookingByID(int ID){
         for(Booking booking1 : bookings){
-            if(booking1.getID() == ID){
+            if(booking1.getID() == ID){ //<-- it jön be a mock
                 return booking1;
             }
         }

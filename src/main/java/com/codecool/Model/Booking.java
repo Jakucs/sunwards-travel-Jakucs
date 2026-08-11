@@ -1,5 +1,6 @@
 package com.codecool.Model;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public abstract class Booking {
@@ -14,7 +15,7 @@ public abstract class Booking {
         return bookingID;
     }
 
-    public abstract double getPrice();
+    public abstract BigDecimal getPrice();
 
 
 }
